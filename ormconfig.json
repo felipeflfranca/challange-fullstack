@@ -4,7 +4,7 @@
    "port": 5433,
    "username": "postgres",
    "password": "postgres",
-   "database": "challange",
+   "database": "challenge",
    "synchronize": true,
    "logging": false,
    "entities": [

@@ -4,7 +4,7 @@ import { maps } from '../conifg/maps';
 
 export const address = Router();
 
-export interface Address {
+export type Address = {
     place?: string;
     number?: string;
     district?: string;
@@ -14,7 +14,7 @@ export interface Address {
     country?: string;
     lat?: number;
     lng?: number;
-}
+};
 
 address.get('/search', async (req, res) => {
     const { address } = req.query;
