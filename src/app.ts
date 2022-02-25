@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as logger from 'morgan';
 
-import { databaseConnect } from './conifg/database';
+import { databaseConnect } from './config/database';
 import { clinics } from './routes/clinics';
 import { address } from './routes/address';
 

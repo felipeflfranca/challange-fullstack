@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Router } from 'express';
-import { maps } from '../conifg/maps';
+import { maps } from '../config/maps';
 
 export const address = Router();
 

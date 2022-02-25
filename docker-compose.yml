@@ -1,7 +1,7 @@
 version: "4"
 services:
   db:
-    container_name: "postgresql"
+    container_name: "PostgreSQL"
     image: "postgres:14.2"
     ports: 
       - "5433:5432"
@@ -13,6 +13,14 @@ services:
       POSTGRES_DB: challenge
     networks:
       - default
+  webapp:
+    container_name: "Node"
+    restart: always
+    build: .
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - db
 networks:
   default:
 volumes:
