@@ -1,13 +1,10 @@
-import { app } from './app';
+import { app } from './app'
 
-const PORT = 3000;
+const PORT = 3000
 
-const server = app.listen(PORT, () => console.log(`APP listening port: ${PORT}`));
+const server = app.listen(PORT, () => console.log(`App listening to port ${PORT}`))
 
-/**
- * Close the app at the end of the process
- */
 process.on('SIGINT', () => {
-    server.close();
-    console.log(`Closed app`);
-});
+  server.close()
+  console.log('Closed app')
+})

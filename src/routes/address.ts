@@ -1,14 +1,14 @@
-import axios from "axios";
-import { Router } from 'express';
-import { maps } from '../config/maps';
+import axios from 'axios'
+import { Router } from 'express'
+import { maps } from '../config/maps'
 
-export const address = Router();
+export const address = Router()
 
 export type Address = {
     place?: string;
     number?: string;
     district?: string;
-    postal_code?: string;
+    postalCode?: string;
     city?: string;
     state?: string;
     country?: string;
@@ -17,57 +17,57 @@ export type Address = {
 };
 
 address.get('/search', async (req, res) => {
-    const { address } = req.query;
+  const { address } = req.query
 
-    if (address) {
-        await axios({
-            method: 'GET',
-            url: `${maps.url}?address=${address}&key=${maps.key}`,
-        }).then((response) => {
-            const data = response.data;
-            if (data.status === "OK") {
-                const { address_components, geometry } = data.results[0];
+  if (address) {
+    await axios({
+      method: 'GET',
+      url: `${maps.url}?address=${address}&key=${maps.key}`
+    }).then((response) => {
+      const data = response.data
+      if (data.status === 'OK') {
+        const { address_components, geometry } = data.results[0]
 
-                const addressModel: Address = {};
-                
-                const keys = Object.keys(address_components);
-                keys.forEach(key => {
-                    const type = address_components[key].types[0];
-                    const value = address_components[key].long_name;
+        const addressModel: Address = {}
 
-                    switch (type) {
-                        case 'street_number':
-                            addressModel.number = value;
-                            break;
-                        case 'route':
-                            addressModel.place = value;
-                            break;
-                        case 'administrative_area_level_2':
-                            addressModel.city = value;
-                            break;
-                        case 'administrative_area_level_1':
-                            addressModel.state = value;
-                            break;
-                        case 'country':
-                            addressModel.country = value;
-                            break;
-                        case 'postal_code':
-                            addressModel.postal_code = value;
-                            break;
-                        default:
-                            break;
-                    }
-                });
+        const keys = Object.keys(address_components)
+        keys.forEach(key => {
+          const type = address_components[key].types[0]
+          const value = address_components[key].long_name
 
-                addressModel.lat = geometry.location.lat;
-                addressModel.lng = geometry.location.lng;
+          switch (type) {
+            case 'street_number':
+              addressModel.number = value
+              break
+            case 'route':
+              addressModel.place = value
+              break
+            case 'administrative_area_level_2':
+              addressModel.city = value
+              break
+            case 'administrative_area_level_1':
+              addressModel.state = value
+              break
+            case 'country':
+              addressModel.country = value
+              break
+            case 'postal_code':
+              addressModel.postalCode = value
+              break
+            default:
+              break
+          }
+        })
 
-                res.json(addressModel);
-            } else {
-                res.status(404).json({ message: 'Endereço não encontrado' });
-            }
-        });
-    } else {
-        res.status(400).json({ message: 'O parâmetro "address" não foi informado' });
-    };
-});
+        addressModel.lat = geometry.location.lat
+        addressModel.lng = geometry.location.lng
+
+        res.json(addressModel)
+      } else {
+        res.status(404).json({ message: 'Endereço não encontrado' })
+      }
+    })
+  } else {
+    res.status(400).json({ message: 'O parâmetro "address" não foi informado' })
+  }
+})

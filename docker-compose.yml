@@ -1,6 +1,14 @@
 version: "4"
 services:
-  db:
+  server:
+    container_name: "Node"
+    restart: always
+    build: .
+    ports:
+      - "3001:3000"
+    depends_on:
+      - database
+  database:
     container_name: "PostgreSQL"
     image: "postgres:14.2"
     ports: 
@@ -11,17 +19,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: challenge
-    networks:
-      - default
-  webapp:
-    container_name: "Node"
-    restart: always
-    build: .
-    ports: 
-      - "3000:3000"
-    depends_on:
-      - db
-networks:
-  default:
 volumes:
   pgdata : {}

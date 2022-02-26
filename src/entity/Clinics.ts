@@ -1,13 +1,12 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
 export class Clinics {
-
-    constructor(name: string, cnpj: string, address: string) {
-        this.name = name;
-        this.cnpj = cnpj;
-        this.address = address;
-    };
+  constructor (name: string, cnpj: string, address: string) {
+    this.name = name
+    this.cnpj = cnpj
+    this.address = address
+  }
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -20,5 +19,4 @@ export class Clinics {
 
     @Column('jsonb', { nullable: false, default: {} })
     address: string;
-
 }
