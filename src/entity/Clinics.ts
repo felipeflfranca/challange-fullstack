@@ -8,15 +8,15 @@ export class Clinics {
     this.address = address
   }
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @Column({ nullable: false })
-    name: string;
+  @Column({ nullable: false })
+  name: string
 
-    @Column({ length: 11, nullable: false })
-    cnpj: string;
+  @Column({ length: 11, nullable: false })
+  cnpj: string
 
-    @Column('jsonb', { nullable: false, default: {} })
-    address: string;
+  @Column('jsonb', { nullable: false, default: {} })
+  address: string
 }

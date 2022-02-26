@@ -3,23 +3,31 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'standard'
-  ],
-  parser: '@typescript-eslint/parser',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+  extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'standard'],
+  settings: {
+    'import/resolver': {
+      node: {
+        moduleDirectory: ['node_modules', 'src/']
+      }
+    }
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+      impliedStrict: true
+    }
   },
-  plugins: [
-    '@typescript-eslint'
-  ],
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
-    camelcase: ['error', { properties: 'never', ignoreDestructuring: true }]
+    camelcase: [
+      'error',
+      {
+        properties: 'never',
+        ignoreDestructuring: true
+      }
+    ]
   }
 }

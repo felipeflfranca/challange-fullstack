@@ -5,16 +5,16 @@ import { maps } from '../config/maps'
 export const address = Router()
 
 export type Address = {
-    place?: string;
-    number?: string;
-    district?: string;
-    postalCode?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    lat?: number;
-    lng?: number;
-};
+  place?: string
+  number?: string
+  district?: string
+  postalCode?: string
+  city?: string
+  state?: string
+  country?: string
+  lat?: number
+  lng?: number
+}
 
 address.get('/search', async (req, res) => {
   const { address } = req.query
@@ -31,7 +31,7 @@ address.get('/search', async (req, res) => {
         const addressModel: Address = {}
 
         const keys = Object.keys(address_components)
-        keys.forEach(key => {
+        keys.forEach((key) => {
           const type = address_components[key].types[0]
           const value = address_components[key].long_name
 
