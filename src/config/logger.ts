@@ -44,10 +44,10 @@ const Logger = winston.createLogger({
   format,
   transports: [fileRotateTransport],
   exceptionHandlers: [
-    new winston.transports.File({ filename: 'exception.log' })
+    new winston.transports.File({ filename: process.env.LOG_PATH + 'exception.log' })
   ],
   rejectionHandlers: [
-    new winston.transports.File({ filename: 'rejections.log' })
+    new winston.transports.File({ filename: process.env.LOG_PATH + 'rejections.log' })
   ]
 })
 
