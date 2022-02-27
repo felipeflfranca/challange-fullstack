@@ -1,10 +1,11 @@
 import { createConnection } from 'typeorm'
+import Logger from './logger'
 
 export const databaseConnect = async () => {
   const connection = await createConnection()
-  console.log(`Connection app ${connection.options.database}`)
+  Logger.info(`DATABASE: Connection to ${connection.options.database} database successfully established`)
 
   process.on('SIGINT', () => {
-    connection.close().then(() => console.log('Closed connection'))
+    connection.close().then(() => Logger.info('DATABASE: Database connection closed'))
   })
 }
