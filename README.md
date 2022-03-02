@@ -1,7 +1,9 @@
-# Awesome Project Build with TypeORM
+# Clinic registration App - Challenge Fullstack
+# Registering and searching clinics with Google API
 
-Steps to run this project:
+- REST API backend is powered by Express.js, Node.js with Typescript and PostgreSQL database
+- The front-end is developed with React.js library
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+## Prerequisites
+
+## Tests
