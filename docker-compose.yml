@@ -1,15 +1,25 @@
 version: "4"
 services:
+  app:
+    build: 
+      context: ./app
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
   server:
-    container_name: "Node"
     restart: always
-    build: .
+    build: 
+      context: ./server
+      dockerfile: ./Dockerfile
     ports:
       - "3001:3001"
+    volumes:
+       - logs:/usr/src/server/logs
     depends_on:
       - database
   database:
-    container_name: "PostgreSQL"
     image: "postgres:14.2"
     ports: 
       - "5433:5432"
@@ -21,3 +31,4 @@ services:
       POSTGRES_DB: challenge
 volumes:
   pgdata : {}
+  logs: {}
