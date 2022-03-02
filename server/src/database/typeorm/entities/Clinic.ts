@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import Address from '../../../entities/Adress'
 
-@Entity({ name: 'Clinics' })
+@Entity({ name: 'clinics' })
 export default class Clinic {
   @PrimaryGeneratedColumn()
   id: number
@@ -9,8 +9,8 @@ export default class Clinic {
   @Column({ nullable: false })
   name: string
 
-  @Column({ length: 11, nullable: false })
-  cpf: string
+  @Column({ length: 14, nullable: false })
+  cnpj: string
 
   @Column('jsonb', { nullable: false, default: {} })
   address: Address

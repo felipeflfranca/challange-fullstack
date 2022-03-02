@@ -15,7 +15,7 @@ export default class ClinicsController {
 
   /** Save clinic data */
   save = async (req: Request, res: Response) => {
-    const { id, name, cpf, address } = req.body
+    const { id, name, cnpj, address } = req.body
 
     const clinic = new Clinic()
 
@@ -25,14 +25,14 @@ export default class ClinicsController {
 
     try {
       clinic.name = name
-      clinic.cpf = cpf
+      clinic.cnpj = cnpj
       clinic.address = new Address(address)
 
       new ValidatorUtils({
         data: clinic,
         validate: [
           { field: 'name', message: 'O campo Nome é obrigatório' },
-          { field: 'cpf', message: 'O campo CPF é obrigatório' },
+          { field: 'cnpj', message: 'O campo CNPJ é obrigatório' },
           { field: 'place', message: 'O campo Logradouro é obrigatório' },
           { field: 'number', message: 'O campo Número é obrigatório' },
           { field: 'district', message: 'O campo Bairro é obrigatório' },
