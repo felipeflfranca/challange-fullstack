@@ -10,23 +10,23 @@ import Address from '../../../entities/Adress'
 @Entity({ name: 'clinics' })
 export default class Clinic {
   @PrimaryGeneratedColumn()
-  id: number
+    id: number
 
   @Column({ nullable: false })
-  name: string
+    name: string
 
   @Column({ length: 14, nullable: false })
-  cnpj: string
+    cnpj: string
 
   @Column('jsonb', { nullable: false, default: {} })
-  address: Address
+    address: Address
 
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)'
   })
-  createdAt: Date
+    createdAt: Date
 
   @UpdateDateColumn({
     name: 'updated_at',
@@ -34,5 +34,5 @@ export default class Clinic {
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)'
   })
-  updatedAt: Date
+    updatedAt: Date
 }

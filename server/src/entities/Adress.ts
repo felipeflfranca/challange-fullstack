@@ -1,25 +1,25 @@
 interface AddressProps {
-  place: string
-  number: string
-  district: string
-  postalCode: string
-  city: string
-  state: string
-  country: string
-  lat: number
-  lng: number
+  place?: string
+  number?: string
+  district?: string
+  postalCode?: string
+  city?: string
+  state?: string
+  country?: string
+  lat?: string
+  lng?: string
 }
 
 export default class Address {
-  place: string
-  number: string
-  district: string
-  postalCode: string
-  city: string
-  state: string
-  country: string
-  lat: number
-  lng: number
+  place?: string
+  number?: string
+  district?: string
+  postalCode?: string
+  city?: string
+  state?: string
+  country?: string
+  lat?: string
+  lng?: string
 
   constructor (props: AddressProps) {
     this.place = props.place

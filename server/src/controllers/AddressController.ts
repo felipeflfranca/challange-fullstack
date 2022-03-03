@@ -16,8 +16,8 @@ export default class AddressController {
     res.json('Livro devolvido com sucesso!')
   }
 
-  search = async (req: Request, res: Response) => {
-    const { address } = req.query
+  search = (req: Request, res: Response) => {
+    const { address } = req.body
 
     if (!address) {
       Logger.error('The address parameter was not informed')
@@ -25,7 +25,7 @@ export default class AddressController {
       return
     }
 
-    if (!process.env.MAP_KEY || process.env.MAP_KEY === '') {
+    if (!process.env.GOOGLE_MAPS_APIKEY || process.env.GOOGLE_MAPS_APIKEY === '') {
       Logger.error('Google Maps API keys not found')
       res
         .status(506)
@@ -36,7 +36,7 @@ export default class AddressController {
       return
     }
 
-    await axios({
+    axios({
       method: 'GET',
       url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_MAPS_APIKEY}`
     }).then((response) => {
@@ -45,7 +45,7 @@ export default class AddressController {
       if (data.status === 'OK') {
         const { address_components, geometry } = data.results[0]
 
-        let addressModel: Address
+        const addressModel: Address = {}
 
         const keys = Object.keys(address_components)
         keys.forEach((key) => {
