@@ -27,7 +27,12 @@ export default class AddressController {
 
     if (!process.env.MAP_KEY || process.env.MAP_KEY === '') {
       Logger.error('Google Maps API keys not found')
-      res.status(506).json({ message: 'Não foi possível realizar a pesquisa. Por favor contate o administrador.' })
+      res
+        .status(506)
+        .json({
+          message:
+            'Não foi possível realizar a pesquisa. Por favor contate o administrador.'
+        })
       return
     }
 

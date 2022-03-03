@@ -15,7 +15,7 @@ const levels = {
 
 const level = () => {
   const env = process.env.NODE_ENV || 'development'
-  const isDevelopment = env === 'development'
+  const isDevelopment = env === 'development' || 'test'
   return isDevelopment ? 'debug' : 'warn'
 }
 
@@ -23,7 +23,10 @@ const format = combine(
   timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   json(),
   printf(
-    (message) => `[${message.timestamp}] [${message.level.toUpperCase()}] ${message.message}`
+    (message) =>
+      `[${message.timestamp}] [${message.level.toUpperCase()}] ${
+        message.message
+      }`
   )
 )
 
@@ -32,7 +35,9 @@ const fileRotateTransport = new winston.transports.DailyRotateFile({
   extension: process.env.LOG_EXTENSION || '.log',
   utc: process.env.LOG_UTC === 'true' || true,
   datePattern: process.env.LOG_DATEPATTERN || 'yyyy-MM-DD',
-  filename: (process.env.LOG_PATH || '') + (process.env.LOG_FILENAME || 'logs/log-%DATE%'),
+  filename:
+    (process.env.LOG_PATH || '') +
+    (process.env.LOG_FILENAME || 'logs/log-%DATE%'),
   zippedArchive: process.env.LOG_ZIPARCHIVE === 'true' || true,
   maxSize: process.env.LOG_MAXSIZE || '20m',
   maxFiles: process.env.LOG_MAXFILE || '14d'
