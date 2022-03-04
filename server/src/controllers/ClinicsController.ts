@@ -15,7 +15,7 @@ export default class ClinicsController {
 
   /** Save clinic data */
   save = async (req: Request, res: Response) => {
-    const { id, name, cnpj, address } = req.body
+    const { id, name, cnpj, address, apikey } = req.body
 
     const clinic = new Clinic()
 
@@ -28,26 +28,27 @@ export default class ClinicsController {
       clinic.cnpj = cnpj
       clinic.address = new Address(address)
 
-      new ValidatorUtils({
-        data: clinic,
-        validate: [
-          { field: 'name', message: 'O campo Nome é obrigatório' },
-          { field: 'cnpj', message: 'O campo CNPJ é obrigatório' },
-          { field: 'place', message: 'O campo Logradouro é obrigatório' },
-          { field: 'number', message: 'O campo Número é obrigatório' },
-          { field: 'district', message: 'O campo Bairro é obrigatório' },
-          { field: 'postalCode', message: 'O campo CEP é obrigatório' },
-          { field: 'city', message: 'O campo Cidade é obrigatório' },
-          { field: 'state', message: 'O campo Estado é obrigatório' },
-          { field: 'country', message: 'O campo País é obrigatório' },
-          { field: 'lat', message: 'O campo Latitude é obrigatório' },
-          { field: 'lng', message: 'O campo Longitude é obrigatório' }
-        ]
-      }).check()
+      const ignore = apikey === process.env.REACT_APP_INTEGRATION_APIKEY
 
-      const data = await this.repository.save(clinic)
+      const validate = [
+        { field: 'name', message: 'O campo Nome é obrigatório' },
+        { field: 'cnpj', message: 'O campo CNPJ é obrigatório' },
+        { field: 'place', message: 'O campo Logradouro é obrigatório' },
+        { field: 'postalCode', message: 'O campo CEP é obrigatório' },
+        { field: 'city', message: 'O campo Cidade é obrigatório' },
+        { field: 'state', message: 'O campo Estado é obrigatório' },
+        { field: 'country', message: 'O campo País é obrigatório' },
+        { field: 'lat', message: 'O campo Latitude é obrigatório' },
+        { field: 'lng', message: 'O campo Longitude é obrigatório' },
+        { field: 'number', message: 'O campo Número é obrigatório' },
+        { field: 'district', message: 'O campo Bairro é obrigatório', ignore }
+      ]
 
-      res.json(data)
+      new ValidatorUtils(validate).check(clinic)
+
+      const result = await this.repository.save(clinic)
+
+      res.json(result)
     } catch (error) {
       Logger.error(error.message)
       res.status(404).json({ message: error.message })

@@ -1,41 +1,35 @@
 type ValidatorTypes = {
   field: string
-  message: string
-}
-
-interface ValidatorProps {
-  data: object
-  validate: Array<ValidatorTypes>
+  message: string,
+  ignore?: boolean|null|undefined
 }
 
 export default class Validator {
-  data: object
   validate: Array<ValidatorTypes>
 
   /**
-   * @param props.data template with the data sent
    * @param props.validate field name and error message
    */
-  constructor (props: ValidatorProps) {
-    this.data = props.data
-    this.validate = props.validate
+  constructor (validate: Array<ValidatorTypes>) {
+    this.validate = validate
   }
 
   /**
    * Checks if the field has been entered
    */
-  check = () => {
-    const dataKeys = Object.keys(this.data)
+  check = (data: unknown) => {
+    const dataKeys = Object.keys(data)
 
     dataKeys.forEach((key) => {
-      if (this.isObject(this.data[key])) {
-        const subDataKeys = Object.keys(this.data[key])
+      this.validData(data[key], key)
+
+      if (this.isObject(data[key])) {
+        const subDataKeys = Object.keys(data[key])
+
         subDataKeys.forEach((subDataKey) => {
-          this.validData(this.data[key][subDataKey], subDataKey)
+          this.validData(data[key][subDataKey], subDataKey)
         })
       }
-
-      this.validData(this.data[key], key)
     })
 
     return dataKeys
@@ -43,11 +37,13 @@ export default class Validator {
 
   private validData = (data: unknown, key: string) => {
     if (!data || data === '') {
-      const validation = this.validate.find((validateData) => {
-        return validateData.field === key
+      this.validate.forEach((validateData) => {
+        if (!validateData.ignore) {
+          if (validateData.field === key) {
+            throw new Error(validateData.message)
+          }
+        }
       })
-
-      throw new Error(validation.message)
     }
   }
 
