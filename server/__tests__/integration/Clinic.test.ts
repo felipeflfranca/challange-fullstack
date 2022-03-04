@@ -2,6 +2,7 @@ import axios from 'axios'
 import Address from '../../src/entities/Adress'
 import Clinic from '../../src/entities/Clinic'
 
+// Errado
 describe('Register', () => {
   test('The /api/clinics route must save the clinic data and return it with the id', () => {
     const address: Address = {
