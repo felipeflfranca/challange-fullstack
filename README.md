@@ -37,7 +37,7 @@ localhost:3000
 
 ## Using the API
 
-### clinic
+### Clinics
 
 Insert a new clinic - HTTP /POST
 
