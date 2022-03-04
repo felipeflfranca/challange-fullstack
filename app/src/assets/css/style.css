@@ -1,0 +1,20 @@
+body {
+    border: 0px !important;
+    margin: 0px !important
+}
+
+.map {
+    height: 100vh;
+}
+
+.gm-control-active {
+    display: none !important;
+}
+
+.gm-style-mtc button {
+    display: none !important;
+}
+
+.gm-bundled-control-on-bottom {
+    display: none !important;
+}
