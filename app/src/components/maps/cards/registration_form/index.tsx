@@ -11,18 +11,20 @@ import axios from 'axios'
 import { useSnackbar } from 'notistack'
 
 import { cnpjMask, cnpjClear } from '../../../../utils/cnpjFormat'
-import Address from '../../../../model/Adress'
+import { searchByAddress } from '../../../../utils/googleSearch'
+import Address from '../../../../entities/Adress'
 
 type Props = {
   setLatitude: (value: number|null) => void;
   setLongitude: (value: number|null) => void;
   setZoom: (value: number) => void;
+  getAllClinics: () => void;
   latitude: number|null;
   longitude: number|null;
 }
 
 export const RegistrationForm = (props: Props) => {
-  const { latitude, longitude, setLatitude, setLongitude, setZoom } = props
+  const { latitude, longitude, setLatitude, setLongitude, setZoom, getAllClinics } = props
 
   const [name, setName] = React.useState<string>('')
   const [cnpj, setCnpj] = React.useState<string>('')
@@ -37,10 +39,7 @@ export const RegistrationForm = (props: Props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   const googleSearch = async () => {
-    await axios({
-      method: 'GET',
-      url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_APIKEY}`
-    }).then((response) => {
+    await searchByAddress(address).then((response) => {
       const data = response.data
 
       if (data.status === 'OK') {
@@ -129,7 +128,7 @@ export const RegistrationForm = (props: Props) => {
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}/api/clinics`,
+      url: `${process.env.REACT_APP_SERVER_HOST}/api/clinics`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -145,6 +144,7 @@ export const RegistrationForm = (props: Props) => {
           action: <CancelIcon sx={{ color: '#fff', cursor: 'pointer' }} onClick={() => { closeSnackbar() }}/>
         })
         clearFields()
+        getAllClinics()
       })
       .catch(function (error) {
         let message = 'Não foi possível realizar o cadastro. Contate o administrador.'
@@ -163,7 +163,6 @@ export const RegistrationForm = (props: Props) => {
           action: <CancelIcon sx={{ color: '#fff', cursor: 'pointer' }} onClick={() => { closeSnackbar() }}/>
         })
 
-        setAddress('')
         handleRegisterEneble(false)
       })
   }
